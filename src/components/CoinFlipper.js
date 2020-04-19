@@ -1,17 +1,17 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import "./CoinFlipperStyles.css";
 import Coin from "./Coin";
 
-const options = ["yazi", "tura" ];
+const options = ["yazi", "tura"];
 
 const getRandomElFromArr = (arr) => {
-  const randomIndex = Math.floor(Math.random() * arr.length);
-  const randomItem =  arr[randomIndex];
-  return randomItem;
+    const randomIndex = Math.floor(Math.random() * arr.length);
+    const randomItem = arr[randomIndex];
+    return randomItem;
 };
 
 class CoinFlipper extends Component {
-    constructor(props){
+    constructor(props) {
         super(props);
         this.state = {
             currentStatus: options[0],
@@ -34,18 +34,27 @@ class CoinFlipper extends Component {
         }, 1000);
     }
 
+    counterForHeadsAndTails = (headsOrTails) => {
+        return this.state.gelenler.filter(coin => coin === headsOrTails).length;
+    }
+
     render() {
-        const {currentStatus, donuyor, gelenler} = this.state;
+        console.log(this.state.gelenler)
+        const { currentStatus, donuyor, gelenler } = this.state;
         return (
             <div>
                 <h1>
                     Yazi ya da tura
                 </h1>
-                <Coin currentStatus={currentStatus} donuyor={donuyor}/>
+                <Coin currentStatus={currentStatus} donuyor={donuyor} />
                 <button onClick={this.atisYap}>Atis yap</button>
                 {
                     gelenler.length > 0 && !donuyor && <h3>{currentStatus} geldi</h3>
                 }
+
+                <p>Toplam Atış sayısı: {gelenler.length}</p>
+                <p>Yazı Sayısı:{this.counterForHeadsAndTails(options[0])}</p>
+                <p>Tura Sayısı:{this.counterForHeadsAndTails(options[1])}</p>
             </div>
         );
     }
