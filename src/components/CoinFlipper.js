@@ -35,11 +35,11 @@ class CoinFlipper extends Component {
     }
 
     counterForHeadsAndTails = (headsOrTails) => {
-        return this.state.gelenler.filter(coin => coin === headsOrTails).length;
+        const count = this.state.gelenler.filter(coin => coin === headsOrTails).length;
+        return <div>{headsOrTails} sayisi: {count}</div>
     }
 
     render() {
-        console.log(this.state.gelenler)
         const { currentStatus, donuyor, gelenler } = this.state;
         return (
             <div>
@@ -53,8 +53,9 @@ class CoinFlipper extends Component {
                 }
 
                 <p>Toplam Atış sayısı: {gelenler.length}</p>
-                <p>Yazı Sayısı:{this.counterForHeadsAndTails(options[0])}</p>
-                <p>Tura Sayısı:{this.counterForHeadsAndTails(options[1])}</p>
+                {
+                    options.map(option => this.counterForHeadsAndTails(option))
+                }
             </div>
         );
     }
